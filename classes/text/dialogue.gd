@@ -201,6 +201,7 @@ func autostart_dialogue(body):
 
 # this is to make npcs emote in front of signs (and run autostart now lol)
 func area_entered(body):
+	if not parent.enabled: return
 	# "area" is already taken and im too lazy to change it
 	var area_parent = body.get_parent()
 	
