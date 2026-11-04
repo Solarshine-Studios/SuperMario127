@@ -385,6 +385,23 @@ static func convert_100_to_101(data_container: LevelDataContainer):
 	
 	return data_container
 
+static func convert_101_to_102(data_container: LevelDataContainer):
+	for area_header in data_container.area_headers:
+		var area: AreaData = LevelCodeDeserializer.deserialize_area_code(area_header.area_code)
+		for layer in area.layers:
+			for object in layer.object_data:
+				match(object.metadata.type_id):
+					23:
+						# stop it from being entered if rotated
+						# 1: rotation degrees
+						# 2: enabled
+						if object.properties.get(1, 0) != 0:
+							object.properties[2] = false
+							print("REMOVE ME")
+		area_header.area_code = LevelCodeSerializer.serialize_area(area)
+	
+	return data_container
+
 static func is_pre_100(level_code: String) -> bool:
 	return level_code.begins_with("0")
 
