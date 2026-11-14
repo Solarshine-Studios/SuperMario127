@@ -47,6 +47,7 @@ func _physics_process(delta):
 		for body in area.get_overlapping_bodies():
 			if body is Character:
 				body.fuel -= water_drain_speed * delta
+				body.fuel = clamp(body.fuel, 0, 100)
 			
 func _process(_delta):
 	if (water_drain_range != last_range):

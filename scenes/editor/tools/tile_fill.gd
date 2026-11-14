@@ -54,10 +54,11 @@ func fill_place(pos_x, pos_y):
 			cache_tile(current_cell.x, current_cell.y + 1, fourth_tile)
 			cells.append( Vector2(current_cell.x, current_cell.y + 1))
 			
-		var single_tile = shared.get_tile(current_cell.x, current_cell.y, editor.layer)
-		if (depth == 0 and (single_tile == tile_to_fill and not is_erasing or single_tile != [0, 0, 0] and is_erasing) && not undo_tiles.has(Vector2(current_cell.x, current_cell.y + 1))):
-			cache_tile(current_cell.x, current_cell.y, single_tile)
-			cells.append( Vector2(current_cell.x, current_cell.y))
+		if depth == 0: 
+			var single_tile = shared.get_tile(current_cell.x, current_cell.y, editor.layer)
+			if (single_tile == tile_to_fill and not is_erasing or single_tile != [0, 0, 0] and is_erasing) && not undo_tiles.has(Vector2(current_cell.x, current_cell.y + 1)):
+				cache_tile(current_cell.x, current_cell.y, single_tile)
+				cells.append( Vector2(current_cell.x, current_cell.y))
 		
 		depth += 1
 	if depth >= MAX_DEPTH:
